@@ -28,5 +28,10 @@ output  [size-1:0] data_o;
 reg     [size-1:0] data_o;
 
 //Main function
-
+always@(*)begin
+	if(select_i)
+		data_o <= data1_i;
+	else
+		data_o <= data0_i;
+end
 endmodule 

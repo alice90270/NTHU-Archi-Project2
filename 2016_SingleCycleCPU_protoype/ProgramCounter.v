@@ -29,7 +29,7 @@ reg    [32-1:0] pc_out_o;
 
     
 //Main function
-always @(posedge clk_i or negedge rst_i) begin
+always @(posedge clk_i) begin
     if(~rst_i)
 	    pc_out_o <= 0;
 	else

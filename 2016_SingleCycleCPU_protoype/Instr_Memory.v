@@ -37,5 +37,8 @@ end
 initial begin
 	for ( i=0; i<32; i=i+1 )
 		Instr_Mem[i] = 32'b0; 	
+	$readmemb("testcase.txt", Instr_Mem);  
+	//Read instruction from "testcase.txt"   
+	
 end
 endmodule

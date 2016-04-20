@@ -21,7 +21,6 @@
 module Data_Memory
 (
 	clk_i,
-	rst_i,
 	addr_i,
 	data_i,
 	MemRead_i,
@@ -31,7 +30,6 @@ module Data_Memory
 
 // Interface
 input				clk_i;
-input				rst_i;
 input	[31:0]		addr_i;
 input	[31:0]		data_i;
 input				MemRead_i;
@@ -80,21 +78,21 @@ assign  memory[29] = {Mem[119], Mem[118], Mem[117], Mem[116]};
 assign  memory[30] = {Mem[123], Mem[122], Mem[121], Mem[120]};
 assign  memory[31] = {Mem[127], Mem[126], Mem[125], Mem[124]};
 
-/*DO NOT CHANGE DEFAULT VALUE*/
-always@(posedge clk_i or negedge rst_i) begin
-	if(rst_i==0) begin
-		for(i=0; i<128; i=i+1)
-			Mem[i] = 8'b0;
-	end
-	else begin
-		if(MemWrite_i) begin
-			Mem[addr_i+3] <= data_i[31:24];
-			Mem[addr_i+2] <= data_i[23:16];
-			Mem[addr_i+1] <= data_i[15:8];
-			Mem[addr_i]   <= data_i[7:0];
-		end
-	end
+/*DO NOT CHANGE INITIAL VALUE*/
+initial begin
+	for(i=0; i<128; i=i+1)
+		Mem[i] = 8'b0;
+
 end 
+
+always@(posedge clk_i) begin
+    if(MemWrite_i) begin
+		Mem[addr_i+3] <= data_i[31:24];
+		Mem[addr_i+2] <= data_i[23:16];
+		Mem[addr_i+1] <= data_i[15:8];
+		Mem[addr_i]   <= data_i[7:0];
+	end
+end
 
 always@(addr_i or MemRead_i) begin
 	if(MemRead_i)

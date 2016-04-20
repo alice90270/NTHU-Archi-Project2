@@ -32,5 +32,25 @@ wire             zero_o;
 //Parameter
 
 //Main function
-
+always@(*)begin
+	case(ctrl_i)
+		4'b0000://AND	
+			result_o <= src1_i & src2_i;
+		4'b0001://OR
+			result_o <= src1_i | src2_i;
+		4'b0010://ADD
+			result_o <= src1_i + src2_i;
+		4'b0110://SUB BEQ
+			result_o <= src1_i - src2_i;
+		4'b0111:begin//SLT
+			if(src1_i<src2_i)
+				result_o <= 1;
+			else
+				result_o <= 0;
+		end	
+		default:
+			result_o <= src1_i + src2_i;
+	endcase				
+end
+assign zero_o = (result_o == 32'd0) ? 1 : 0;
 endmodule

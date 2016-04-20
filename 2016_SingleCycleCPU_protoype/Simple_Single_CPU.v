@@ -68,10 +68,7 @@ Decoder Decoder(
 	    .ALU_op_o(),   
 	    .ALUSrc_o(),   
 	    .RegDst_o(),   
-		.Branch_o(), 
-		.MemWrite_o(),
-		.MemRead_o(),
-		.MemtoReg_o()
+		.Branch_o()   
 	    );
 
 ALU_Ctrl AC(
@@ -118,22 +115,22 @@ MUX_2to1 #(.size(32)) Mux_PC_Source(
         .data_o()
         );	
 		
-Data_Memory DataMemory(
-		.clk_i(),
-		.rst_i(),
-		.addr_i(),
-		.data_i(),
-		.MemRead_i(),
-		.MemWrite_i(),
-		.data_o()
-		);
+Data_Memory DataMemory
+ (
+     .clk_i(),
+     .addr_i(),
+     .data_i(),
+     .MemRead_i(),
+     .MemWrite_i(),
+     .data_o()
+ );
 
 //DO NOT MODIFY	.data_o
  MUX_2to1 #(.size(32)) Mux_DataMem_Read(
-        .data0_i(),
-        .data1_i(),
-        .select_i(),
-        .data_o(mux_dataMem_result_w)
-		);
+         .data0_i(),
+         .data1_i(),
+         .select_i(),
+         .data_o(mux_dataMem_result_w)
+ );
 
 endmodule

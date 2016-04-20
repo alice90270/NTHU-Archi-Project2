@@ -8,6 +8,11 @@
 //----------------------------------------------
 //Description: 
 //--------------------------------------------------------------------------------
+`define ADD 6'h20
+`define SUB 6'h22
+`define AND 6'h24
+`define OR 6'h25
+`define SLT 6'h2a
 
 module ALU_Ctrl(
           funct_i,
@@ -26,18 +31,31 @@ reg        [4-1:0] ALUCtrl_o;
 
 //Parameter
 
-
 //Select exact operation, please finish the following code
 always@(funct_i or ALUOp_i) begin
-    case(ALUOp_i)
-        3'b000: 
-            begin
+	case(ALUOp_i)
+        3'h00: begin //R-type
                 case(funct_i)
-                    6'b100100: ALUCtrl_o = 4'b0000; // AND
+                    `AND:	ALUCtrl_o <= 4'b0000;
+					`OR:	ALUCtrl_o <= 4'b0001; 
+					`ADD:	ALUCtrl_o <= 4'b0010;
+					`SUB:	ALUCtrl_o <= 4'b0110;
+					`SLT:	ALUCtrl_o <= 4'b0111;
                     default: ALUCtrl_o = 4'b1111;
                 endcase
             end
+		3'h08: //ADDI
+			ALUCtrl_o <= 4'b0010;
+		3'h23: //LW
+			ALUCtrl_o <= 4'b0010;
+		3'h2B: //SW
+			ALUCtrl_o <= 4'b0010;
+		3'h0A: //SLTI
+			ALUCtrl_o <= 4'b0111;
+		3'h04: //BEQ
+			ALUCtrl_o <= 4'b0110;
         default:
+			ALUCtrl_o <= 4'b0010;
     endcase
 end
 endmodule
