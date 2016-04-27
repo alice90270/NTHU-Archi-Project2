@@ -144,7 +144,7 @@ Data_Memory DataMemory
      .clk_i(clk_i),
      .addr_i(alu_o),
      .data_i(rt_o),
-     .MemRead_i(mem_read), //where???
+     .MemRead_i(mem_read), //????
      .MemWrite_i(mem_write),//????
      .data_o(mem_o)
  );

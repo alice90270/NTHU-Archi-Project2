@@ -22,7 +22,7 @@ module ALU_Ctrl(
           
 //I/O ports 
 input      [6-1:0] funct_i;
-input      [3-1:0] ALUOp_i;
+input      [8-1:0] ALUOp_i;
 
 output     [4-1:0] ALUCtrl_o;    
      
@@ -34,7 +34,7 @@ reg        [4-1:0] ALUCtrl_o;
 //Select exact operation, please finish the following code
 always@(funct_i or ALUOp_i) begin
 	case(ALUOp_i)
-        3'h00: begin //R-type
+        8'h00: begin //R-type
                 case(funct_i)
                     `AND:	ALUCtrl_o <= 4'b0000;
 					`OR:	ALUCtrl_o <= 4'b0001; 
@@ -44,15 +44,15 @@ always@(funct_i or ALUOp_i) begin
                     default: ALUCtrl_o = 4'b1111;
                 endcase
             end
-		3'h08: //ADDI
+		8'h08: //ADDI
 			ALUCtrl_o <= 4'b0010;
-		3'h23: //LW
+		8'h23: //LW
 			ALUCtrl_o <= 4'b0010;
-		3'h2B: //SW
+		8'h2B: //SW
 			ALUCtrl_o <= 4'b0010;
-		3'h0A: //SLTI
+		8'h0A: //SLTI
 			ALUCtrl_o <= 4'b0111;
-		3'h04: //BEQ
+		8'h04: //BEQ
 			ALUCtrl_o <= 4'b0110;
         default:
 			ALUCtrl_o <= 4'b0010;
