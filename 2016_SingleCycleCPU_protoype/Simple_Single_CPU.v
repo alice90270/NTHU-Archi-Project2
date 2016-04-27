@@ -92,7 +92,10 @@ Decoder Decoder(
 	    .ALU_op_o(alu_op),   
 	    .ALUSrc_o(alu_src),   
 	    .RegDst_o(reg_dst),   
-		.Branch_o(branch)   
+		.Branch_o(branch),   
+		.MemWrite_o(mem_write),
+		.MemRead_o(mem_read),
+		.MemtoReg_o(mem_reg)
 	    );
 
 ALU_Ctrl AC(

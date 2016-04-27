@@ -15,7 +15,10 @@ module Decoder(
 	ALU_op_o,
 	ALUSrc_o,
 	RegDst_o,
-	Branch_o
+	Branch_o,
+	MemWrite_o,
+	MemRead_o,
+	MemtoReg_o
 	);
      
 //I/O ports
@@ -26,14 +29,19 @@ output [3-1:0] ALU_op_o;
 output         ALUSrc_o; //(lw|sw|addi|stli)=1
 output         RegDst_o; //(R)=1
 output         Branch_o; //(beq)=1
- 
+output			MemWrite_o;
+output			MemRead_o;
+output			MemtoReg_o; 
+
 //Internal Signals
 reg    [8-1:0] ALU_op_o;
 reg            ALUSrc_o;
 reg            RegWrite_o;
 reg            RegDst_o;
 reg            Branch_o;
-
+reg			MemWrite_o;
+reg			MemRead_o;
+reg			MemtoReg_o; 
 //Parameter
 
 
