@@ -21,115 +21,139 @@ input         rst_i;
 //Internal Signals
 wire [32-1:0] mux_dataMem_result_w;
 wire ctrl_register_write_w;
+wire [32-1:0] add4;
+wire [32-1:0] pc_o;
+wire [32-1:0] pc_i;
+wire [32-1:0] adder_o;
+wire [32-1:0] instruction;
+wire [32-1:0] adder1_o;
+wire [32-1:0] adder2_o;
+wire [32-1:0] reg_dst;
+wire [32-1:0] w_reg;
+wire [32-1:0] rs_o;
+wire [32-1:0] rt_o;
+wire [32-1:0] alu_op;
+wire [32-1:0] alu_src;
+wire [32-1:0] branch;
+wire [32-1:0] alu_ctrl;
+wire [32-1:0] signed_instr;
+wire [32-1:0] alu_i;
+wire [32-1:0] is_beq;
+wire [32-1:0] shift2;
+wire [32-1:0] mem_read;
+wire [32-1:0] mem_write;
+wire [32-1:0] mem_reg;
+wire [32-1:0] alu_o;
 
+assign add4 = 32'd4;
 //Create components
 ProgramCounter PC(
-        .clk_i(),      
-	    .rst_i (),     
-	    .pc_in_i() ,   
-	    .pc_out_o() 
+        .clk_i(clk_i),      
+	    .rst_i (rst_i),     
+	    .pc_in_i(pc_i) ,   
+	    .pc_out_o(pc_o) 
 	    );
 	
 Adder Adder1(
-        .src1_i(),     
-	    .src2_i(),     
-	    .sum_o()    
+        .src1_i(pc_o),     
+	    .src2_i(add4),     
+	    .sum_o(adder1_o)    
 	    );
 	
 Instr_Memory IM(
-        .pc_addr_i(),  
-	    .instr_o()    
+        .pc_addr_i(pc_o),  
+	    .instr_o(instruction)    
 	    );
 
 MUX_2to1 #(.size(5)) Mux_Write_Reg(
-        .data0_i(),
-        .data1_i(),
-        .select_i(),
-        .data_o()
+        .data0_i(instruction[20:16]),
+        .data1_i(instruction[15:11]),
+        .select_i(reg_dst),
+        .data_o(w_reg)
         );	
 
 //DO NOT MODIFY	.RDdata_i && .RegWrite_i
 Reg_File RF(
-        .clk_i(),
-		.rst_i(),
-		.RSaddr_i() ,
-		.RTaddr_i() ,
-		.RDaddr_i() ,
+        .clk_i(clk_i),
+		.rst_i(rst_i),
+		.RSaddr_i(instruction[25:21]) ,
+		.RTaddr_i(instruction[20:16]) ,
+		.RDaddr_i(w_reg) ,
 		.RDdata_i(mux_dataMem_result_w[31:0]),
 		.RegWrite_i(ctrl_register_write_w),
-		.RSdata_o() ,
-		.RTdata_o()
+		.RSdata_o(rs_o) ,
+		.RTdata_o(rt_o)
         );
 	
 //DO NOT MODIFY	.RegWrite_o
 Decoder Decoder(
-        .instr_op_i(), 
+        .instr_op_i(instruction[31:26]), 
 	    .RegWrite_o(ctrl_register_write_w), 
-	    .ALU_op_o(),   
-	    .ALUSrc_o(),   
-	    .RegDst_o(),   
-		.Branch_o()   
+	    .ALU_op_o(alu_op),   
+	    .ALUSrc_o(alu_src),   
+	    .RegDst_o(reg_dst),   
+		.Branch_o(branch)   
 	    );
 
 ALU_Ctrl AC(
-        .funct_i(),   
-        .ALUOp_i(),   
-        .ALUCtrl_o() 
+        .funct_i(instruction[5:0]),   
+        .ALUOp_i(alu_op),   
+        .ALUCtrl_o(alu_ctrl) 
         );
 	
 Sign_Extend SE(
-        .data_i(),
-        .data_o()
+        .data_i(instruction[15:0]),
+        .data_o(signed_instr)
         );
 
 MUX_2to1 #(.size(32)) Mux_ALUSrc(
-        .data0_i(),
-        .data1_i(),
-        .select_i(),
-        .data_o()
+        .data0_i(rt_o),
+        .data1_i(signed_instr),
+        .select_i(alu_src),
+        .data_o(alu_i)
         );	
 		
 ALU ALU(
-        .src1_i(),
-	    .src2_i(),
-	    .ctrl_i(),
-	    .result_o(),
-		.zero_o()
+        .src1_i(rs_o),
+	    .src2_i(alu_o),
+	    .ctrl_i(alu_ctrl),
+	    .result_o(alu_o),
+		.zero_o(is_beq)
 	    );
 		
 Adder Adder2(
-        .src1_i(),     
-	    .src2_i(),     
-	    .sum_o()      
+        .src1_i(adder1_o),     
+	    .src2_i(shift2),     
+	    .sum_o(adder2_o)      
 	    );
 		
 Shift_Left_Two_32 Shifter(
-        .data_i(),
-        .data_o()
+        .data_i(signed_instr),
+        .data_o(shift2)
         ); 		
 		
 MUX_2to1 #(.size(32)) Mux_PC_Source(
-        .data0_i(),
-        .data1_i(),
-        .select_i(),
-        .data_o()
+        .data0_i(adder1_o),
+        .data1_i(adder2_o),
+        .select_i(branch&&is_beq),
+        .data_o(pc_i)
         );	
 		
 Data_Memory DataMemory
  (
-     .clk_i(),
-     .addr_i(),
-     .data_i(),
-     .MemRead_i(),
-     .MemWrite_i(),
-     .data_o()
+     .clk_i(clk_i),
+     .addr_i(alu_o),
+     .data_i(rt_o),
+     .MemRead_i(mem_read), //where???
+     .MemWrite_i(mem_write),//????
+     .data_o(mem_o)
  );
 
 //DO NOT MODIFY	.data_o
  MUX_2to1 #(.size(32)) Mux_DataMem_Read(
-         .data0_i(),
-         .data1_i(),
-         .select_i(),
+         .data0_i(alu_o),
+         .data1_i(mem_o),
+         .select_i(mem_reg), //????
          .data_o(mux_dataMem_result_w)
  );
 
