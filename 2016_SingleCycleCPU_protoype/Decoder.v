@@ -25,7 +25,7 @@ module Decoder(
 input  [6-1:0] instr_op_i;
 
 output         RegWrite_o;//(R|lw|addi|stli)=1
-output [3-1:0] ALU_op_o; 
+output [8-1:0] ALU_op_o; 
 output         ALUSrc_o; //(lw|sw|addi|stli)=1
 output         RegDst_o; //(R)=1
 output         Branch_o; //(beq)=1
@@ -54,6 +54,9 @@ always@(*)begin
 			ALUSrc_o <= 0;
 			RegWrite_o<=1;
 			RegDst_o<=1;
+			MemWrite_o<=0;
+			MemRead_o<=0;
+			MemtoReg_o<=0;
 		end
 		6'h08: begin
 			ALU_op_o <= 8'h08; //ADDI
@@ -61,6 +64,9 @@ always@(*)begin
 			ALUSrc_o <= 1;
 			RegWrite_o<=1;
 			RegDst_o<=0;
+			MemWrite_o<=0;
+			MemRead_o<=0;
+			MemtoReg_o<=0;
 		end
 		6'h23: begin
 			ALU_op_o <= 8'h23; //LW
@@ -68,6 +74,9 @@ always@(*)begin
 			ALUSrc_o <= 1;
 			RegWrite_o<=1;
 			RegDst_o<=0;
+			MemWrite_o<=0;
+			MemRead_o<=0;
+			MemtoReg_o<=0;
 		end
 		6'h2B: begin
 			ALU_op_o <= 8'h2B; //SW
@@ -75,6 +84,9 @@ always@(*)begin
 			ALUSrc_o <= 1;
 			RegWrite_o<=0;
 			RegDst_o<=0;
+			MemWrite_o<=1;
+			MemRead_o<=0;
+			MemtoReg_o<=0;
 		end
 		6'h0A: begin
 			ALU_op_o <= 8'h0A; //SLTI
@@ -82,6 +94,9 @@ always@(*)begin
 			ALUSrc_o <= 1;
 			RegWrite_o<=1;
 			RegDst_o<=0;
+			MemWrite_o<=0;
+			MemRead_o<=0;
+			MemtoReg_o<=0;
 		end
 		6'h04: begin
 			ALU_op_o <= 8'h04; //BEQ
@@ -89,6 +104,10 @@ always@(*)begin
 			ALUSrc_o <= 0;
 			RegWrite_o<=0;
 			RegDst_o<=0;
+			MemWrite_o<=0;
+			MemRead_o<=0;
+			MemtoReg_o<=0;
+			
 		end	
 	endcase
 end
