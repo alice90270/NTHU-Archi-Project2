@@ -119,7 +119,7 @@ MUX_2to1 #(.size(32)) Mux_ALUSrc(
 		
 ALU ALU(
         .src1_i(rs_o),
-	    .src2_i(alu_o),
+	    .src2_i(alu_i),
 	    .ctrl_i(alu_ctrl),
 	    .result_o(alu_o),
 		.zero_o(is_beq)
@@ -148,8 +148,8 @@ Data_Memory DataMemory
      .clk_i(clk_i),
      .addr_i(alu_o),
      .data_i(rt_o),
-     .MemRead_i(mem_read), //????
-     .MemWrite_i(mem_write),//????
+     .MemRead_i(mem_read), 
+     .MemWrite_i(mem_write),
      .data_o(mem_o)
  );
 
@@ -157,7 +157,7 @@ Data_Memory DataMemory
  MUX_2to1 #(.size(32)) Mux_DataMem_Read(
          .data0_i(alu_o),
          .data1_i(mem_o),
-         .select_i(mem_reg), //????
+         .select_i(mem_reg),
          .data_o(mux_dataMem_result_w)
  );
 

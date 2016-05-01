@@ -46,9 +46,11 @@ always@(posedge CLK) begin
 	if( count == `END_COUNT ) begin
 		for(i=0; i<32; i=i+1) begin
 			//$display("$%0d: %0d", i, cpu.RF.Reg_File[i]);
-      $display("$%0d: 0x%08x", i, cpu.RF.Reg_File[i]);
+      $display("$%0d: 0x%0d", i, cpu.RF.Reg_File[i]);
 		end
 	end
+	//for(i=0; i<32; i=i+1)
+		//$display("$%0d: 0x%08x", i, cpu.RF.Reg_File[i]);
 end
   
 endmodule

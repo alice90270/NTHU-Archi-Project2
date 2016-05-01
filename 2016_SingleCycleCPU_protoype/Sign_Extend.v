@@ -22,8 +22,9 @@ output  [32-1:0] data_o;
 reg     [32-1:0] data_o;
 
 //Sign extended
-always@(*)begin
-	data_o = {{16{data_i[15]}},$signed(data_i)};
+always@(data_i)begin
+	data_o = {{16{data_i[15]}},data_i};
+
 end 
 
 endmodule

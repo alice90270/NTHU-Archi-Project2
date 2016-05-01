@@ -34,6 +34,7 @@ always @(posedge clk_i) begin
 	    pc_out_o <= 0;
 	else
 	    pc_out_o <= pc_in_i;
+//$display("pc=%d",pc_out_o);
 end
 
 endmodule
