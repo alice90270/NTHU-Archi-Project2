@@ -28,22 +28,23 @@ wire [32-1:0] adder_o;
 wire [32-1:0] instruction;
 wire [32-1:0] adder1_o;
 wire [32-1:0] adder2_o;
-wire [32-1:0] reg_dst;
-wire w_reg;
+wire reg_dst;
+wire [5-1:0]w_reg;
 wire [32-1:0] rs_o;
 wire [32-1:0] rt_o;
 wire [8-1:0] alu_op;
 wire alu_src;
 wire branch;
-wire alu_ctrl;
+wire [4-1:0]alu_ctrl;
 wire [32-1:0] signed_instr;
-wire alu_i;
+wire [32-1:0]alu_i;
 wire is_beq;
 wire [32-1:0] shift2;
 wire mem_read;
 wire mem_write;
 wire mem_reg;
 wire [32-1:0] alu_o;
+wire [32-1:0] mem_o;
 
 assign add4 = 32'd4;
 //Create components

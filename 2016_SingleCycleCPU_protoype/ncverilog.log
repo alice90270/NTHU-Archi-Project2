@@ -1,0 +1,119 @@
+ncverilog: 14.10-s005: (c) Copyright 1995-2014 Cadence Design Systems, Inc.
+TOOL:	ncverilog	14.10-s005: Started on May 01, 2016 at 15:25:25 CST
+ncverilog
+	Simple_Single_CPU.v
+	Data_Memory.v
+	Reg_File.v
+	Instr_Memory.v
+	Adder.v
+	ALU.v
+	ALU_Ctrl.v
+	Decoder.v
+	MUX_2to1.v
+	ProgramCounter.v
+	Shift_Left_Two_32.v
+	Sign_Extend.v
+	Test_Bench.v
+Recompiling... reason: file './Simple_Single_CPU.v' is newer than expected.
+	expected: Sun May  1 15:20:45 2016
+	actual:   Sun May  1 15:25:22 2016
+file: Simple_Single_CPU.v
+	module worklib.Simple_Single_CPU:v
+		errors: 0, warnings: 0
+file: Decoder.v
+	module worklib.Decoder:v
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.ALU:v <0x3d227f89>
+			streams:   3, words:  1408
+		worklib.ALU_Ctrl:v <0x6df83e01>
+			streams:   4, words:  1452
+		worklib.Adder:v <0x48106066>
+			streams:   1, words:   112
+		worklib.Data_Memory:v <0x7d8b307f>
+			streams:   4, words:  1645
+		worklib.Decoder:v <0x52db874b>
+			streams:   7, words:  3847
+		worklib.Instr_Memory:v <0x2ce9a7c6>
+			streams:   2, words:   729
+		worklib.MUX_2to1:v <0x089b8244>
+			streams:   2, words:   375
+		worklib.MUX_2to1:v <0x1321938f>
+			streams:   2, words:   390
+		worklib.MUX_2to1:v <0x5edc66c9>
+			streams:   0, words:     0
+		worklib.ProgramCounter:v <0x1aec8e70>
+			streams:   2, words:   352
+		worklib.Reg_File:v <0x71be46ab>
+			streams:  37, words: 12175
+		worklib.Shift_Left_Two_32:v <0x53283bca>
+			streams:   1, words:    98
+		worklib.Sign_Extend:v <0x38295f86>
+			streams:   1, words:   179
+		worklib.Simple_Single_CPU:v <0x217f782c>
+			streams:   8, words:   857
+		worklib.TestBench:v <0x5a4e0f16>
+			streams:   4, words:  1962
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		                 Instances  Unique
+		Modules:                17      13
+		Registers:              28      25
+		Scalar wires:           10       -
+		Vectored wires:         55       -
+		Always blocks:          15      12
+		Initial blocks:          3       3
+		Cont. assignments:       7      38
+		Pseudo assignments:      8       8
+		Simulation timescale:  1ps
+	Writing initial simulation snapshot: worklib.TestBench:v
+Loading snapshot worklib.TestBench:v .................... Done
+*Verdi3* Loading libsscore_ius141.so
+*Verdi3* : Enable Parallel Dumping.
+ncsim> source /usr/cad/cadence/INCISIV/cur/tools/inca/files/ncsimrc
+ncsim> run
+ncsim: *W,RMEMNOF: $readmem error: open failed on file "testcase.txt".
+            File: ./Instr_Memory.v, line = 40, pos = 35
+           Scope: TestBench.cpu.IM
+            Time: 0 FS + 0
+
+$0: 0x00000000
+$1: 0xxxxxxxxx
+$2: 0xxxxxxxxx
+$3: 0x00000000
+$4: 0xxxxxxxxx
+$5: 0xxxxxxxxx
+$6: 0xxxxxxxxx
+$7: 0x00000000
+$8: 0xxxxxxxxx
+$9: 0x00000000
+$10: 0x00000000
+$11: 0x00000000
+$12: 0x00000000
+$13: 0x00000000
+$14: 0x00000000
+$15: 0x00000000
+$16: 0x00000000
+$17: 0x00000000
+$18: 0x00000000
+$19: 0x00000000
+$20: 0x00000000
+$21: 0x00000000
+$22: 0x00000000
+$23: 0x00000000
+$24: 0x00000000
+$25: 0x00000000
+$26: 0x00000000
+$27: 0x00000000
+$28: 0x00000000
+$29: 0x00000000
+$30: 0x00000000
+$31: 0x00000000
+Simulation complete via $finish(1) at time 2010 NS + 0
+./Test_Bench.v:41     #(`CYCLE_TIME*`END_COUNT)	$finish;
+ncsim> exit
+TOOL:	ncverilog	14.10-s005: Exiting on May 01, 2016 at 15:25:27 CST  (total: 00:00:02)

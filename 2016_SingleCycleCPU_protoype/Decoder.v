@@ -47,7 +47,7 @@ reg			MemtoReg_o;
 
 //Main function
 always@(*)begin
-	case(instr_op_i[0:5])
+	case(instr_op_i)
 		6'h00: begin
 			ALU_op_o <= 8'h00; //R
 			Branch_o<=0;
